@@ -51,5 +51,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "UtadGGJ2026.sln"
+    "dotnet.defaultSolution": "UtadGlobalGameJam2026.sln"
 }
