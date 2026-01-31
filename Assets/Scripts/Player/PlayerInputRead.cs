@@ -17,7 +17,7 @@ public class PlayerInputRead : MonoBehaviour
     public bool ActionPressed { get; private set; }     // Salto (Down)
     public bool ActionReleased { get; private set; }    // Salto (Up)
     public bool ActionHeld { get; private set; }        // Salto (Hold)
-
+    public bool ActionBuy {get; private set;}
     void Awake()
     {
         playerInput = new PlayerInput();  
@@ -63,6 +63,8 @@ public class PlayerInputRead : MonoBehaviour
         playerInput.Player.ChangeMaskPos.performed += OnChangeMaskPos;
         playerInput.Player.ChangeMaskAccept.performed += OnChangeMaskAcepted;
         playerInput.Player.TakeOffMask.performed += OnResetMask; 
+
+        playerInput.Player.BuyAction.performed += OnBuyAction;
     }
 
     private void UnsubscribeFromInputActions()
@@ -73,6 +75,7 @@ public class PlayerInputRead : MonoBehaviour
         playerInput.Player.ChangeMaskPos.performed -= OnChangeMaskPos;
         playerInput.Player.ChangeMaskAccept.performed -= OnChangeMaskAcepted;
         playerInput.Player.TakeOffMask.performed -= OnResetMask; 
+        playerInput.Player.BuyAction.performed -= OnBuyAction;
     }
 
 
@@ -108,6 +111,11 @@ public class PlayerInputRead : MonoBehaviour
         NormalPressed = true;
     }
 
+    private void OnBuyAction(InputAction.CallbackContext context)
+    {
+        ActionBuy = true;
+    }
+
     // lLimpia los inputs que solo deben durar un frame
     private void ResetOneShotInputs()
     {
@@ -117,6 +125,7 @@ public class PlayerInputRead : MonoBehaviour
         MaskInputPos = false;
         MaskInputNeg = false;
         NormalPressed = false;
+        ActionBuy = false;
     }
 
     public float GetHorizontalInput() => moveInput.x;

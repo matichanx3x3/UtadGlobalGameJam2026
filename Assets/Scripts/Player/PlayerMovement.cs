@@ -7,7 +7,6 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     // Referencia al ScriptableObject con los datos del jugador
-    public PlayerData data;
     //Referencia al Input System
     public PlayerController playerController;
     
@@ -42,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         // la escala de gravedad inicial
-        SetGravityScale(data.gravityScale);
+        SetGravityScale(playerController.data.gravityScale);
         isFacingRight = true;
         
         RB.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -82,7 +81,7 @@ public class PlayerMovement : MonoBehaviour
         // el jugador está tocando el suelo?
         if (Physics2D.OverlapBox(groundCheckPoint.position, groundCheckSize, 0, groundLayer) && !isJumping)
         {
-            lastOnGroundTime = data.coyoteTime;
+            lastOnGroundTime = playerController.data.coyoteTime;
         }
         #endregion
 
@@ -113,32 +112,32 @@ public class PlayerMovement : MonoBehaviour
         if (RB.velocity.y < 0 && playerController.pInput.GetVerticalInput() < 0)
         {
             // efecto de incrementar gravedad al usar flechaabajo
-            SetGravityScale(data.gravityScale * data.fastFallGravityMult);
+            SetGravityScale(playerController.data.gravityScale * playerController.data.fastFallGravityMult);
             // lo limita para que no llegue al infinit
-            RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -data.maxFastFallSpeed));
+            RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -playerController.data.maxFastFallSpeed));
         }
         else if (isJumpCut)
         {
             // si se suelta antes, aplica un poco mas de gravedad
-            SetGravityScale(data.gravityScale * data.jumpCutGravityMult);
-            RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -data.maxFallSpeed));
+            SetGravityScale(playerController.data.gravityScale * playerController.data.jumpCutGravityMult);
+            RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -playerController.data.maxFallSpeed));
         }
-        else if ((isJumping || isJumpFalling) && Mathf.Abs(RB.velocity.y) < data.jumpHangTimeThreshold)
+        else if ((isJumping || isJumpFalling) && Mathf.Abs(RB.velocity.y) < playerController.data.jumpHangTimeThreshold)
         {
             // redce cuando llega al punto maximo -> "sensacion de flotar"
-            SetGravityScale(data.gravityScale * data.jumpHangGravityMult);
+            SetGravityScale(playerController.data.gravityScale * playerController.data.jumpHangGravityMult);
         }
         else if (RB.velocity.y < 0)
         {
             // incrementa gravedad al caer (de forma normal)
-            SetGravityScale(data.gravityScale * data.fallGravityMult);
+            SetGravityScale(playerController.data.gravityScale * playerController.data.fallGravityMult);
             // lo limita para que no llegue al infinit
-            RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -data.maxFallSpeed));
+            RB.velocity = new Vector2(RB.velocity.x, Mathf.Max(RB.velocity.y, -playerController.data.maxFallSpeed));
         }
         else
         {
             // gravedad por defecto si está en el suelo o moviéndose hacia arriba
-            SetGravityScale(data.gravityScale);
+            SetGravityScale(playerController.data.gravityScale);
         }
         #endregion
     }
@@ -153,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnJumpInput()
     {
         // tiempo de la ultima vez que se presion saltar
-        lastPressedJumpTime = data.jumpInputBufferTime;
+        lastPressedJumpTime = playerController.data.jumpInputBufferTime;
     }
 
     public void OnJumpUpInput()
@@ -175,19 +174,19 @@ public class PlayerMovement : MonoBehaviour
     private void Run()
     {
         // velocidad objetivo (Input * Velocidad Máxima)
-        float targetSpeed = playerController.pInput.GetHorizontalInput() * data.runMaxSpeed;
+        float targetSpeed = playerController.pInput.GetHorizontalInput() * playerController.data.runMaxSpeed;
 
         // diferencia entre la velocidad actual y la deseada
         float speedDif = targetSpeed - RB.velocity.x;
 
         // qué tasa de aceleración usar
         // Si targetSpeed es casi 0, frena, sino esta corriendo.
-        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? data.runAccelAmount : data.runDeccelAmount;
+        float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? playerController.data.runAccelAmount : playerController.data.runDeccelAmount;
 
         // ultiplicadores aéreos si no estamos en el suelo
         if (lastOnGroundTime <= 0)
         {
-            accelRate *= (Mathf.Abs(targetSpeed) > 0.01f) ? data.accelInAir : data.deccelInAir;
+            accelRate *= (Mathf.Abs(targetSpeed) > 0.01f) ? playerController.data.accelInAir : playerController.data.deccelInAir;
         }
         // se aplicar la fuerza final
         // F = m * a , basada en la diferencia de velocidad
@@ -217,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
         lastOnGroundTime = 0;
 
         // Aumenta la fuerza aplicada si esta cayendo
-        float force = data.jumpForce;
+        float force = playerController.data.jumpForce;
         if (RB.velocity.y < 0)
             force -= RB.velocity.y;
 

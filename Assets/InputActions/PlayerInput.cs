@@ -147,6 +147,15 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""BuyAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ce91edd-cbf0-47c0-b04c-893d2981a938"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -389,6 +398,28 @@ namespace UnityEngine.InputSystem
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""ChangeMaskNeg"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cea05a80-9bd1-4973-8c83-b40175f5d91f"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""BuyAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""de3cb68f-c306-41d5-803a-faf754e7cbeb"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""BuyAction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -982,6 +1013,7 @@ namespace UnityEngine.InputSystem
             m_Player_ChangeMaskAccept = m_Player.FindAction("ChangeMaskAccept", throwIfNotFound: true);
             m_Player_ChangeMaskPos = m_Player.FindAction("ChangeMaskPos", throwIfNotFound: true);
             m_Player_ChangeMaskNeg = m_Player.FindAction("ChangeMaskNeg", throwIfNotFound: true);
+            m_Player_BuyAction = m_Player.FindAction("BuyAction", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1081,6 +1113,7 @@ namespace UnityEngine.InputSystem
         private readonly InputAction m_Player_ChangeMaskAccept;
         private readonly InputAction m_Player_ChangeMaskPos;
         private readonly InputAction m_Player_ChangeMaskNeg;
+        private readonly InputAction m_Player_BuyAction;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1116,6 +1149,10 @@ namespace UnityEngine.InputSystem
             /// Provides access to the underlying input action "Player/ChangeMaskNeg".
             /// </summary>
             public InputAction @ChangeMaskNeg => m_Wrapper.m_Player_ChangeMaskNeg;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/BuyAction".
+            /// </summary>
+            public InputAction @BuyAction => m_Wrapper.m_Player_BuyAction;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1160,6 +1197,9 @@ namespace UnityEngine.InputSystem
                 @ChangeMaskNeg.started += instance.OnChangeMaskNeg;
                 @ChangeMaskNeg.performed += instance.OnChangeMaskNeg;
                 @ChangeMaskNeg.canceled += instance.OnChangeMaskNeg;
+                @BuyAction.started += instance.OnBuyAction;
+                @BuyAction.performed += instance.OnBuyAction;
+                @BuyAction.canceled += instance.OnBuyAction;
             }
 
             /// <summary>
@@ -1189,6 +1229,9 @@ namespace UnityEngine.InputSystem
                 @ChangeMaskNeg.started -= instance.OnChangeMaskNeg;
                 @ChangeMaskNeg.performed -= instance.OnChangeMaskNeg;
                 @ChangeMaskNeg.canceled -= instance.OnChangeMaskNeg;
+                @BuyAction.started -= instance.OnBuyAction;
+                @BuyAction.performed -= instance.OnBuyAction;
+                @BuyAction.canceled -= instance.OnBuyAction;
             }
 
             /// <summary>
@@ -1531,6 +1574,13 @@ namespace UnityEngine.InputSystem
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnChangeMaskNeg(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "BuyAction" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnBuyAction(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

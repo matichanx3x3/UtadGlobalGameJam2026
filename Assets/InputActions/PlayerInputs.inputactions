@@ -59,6 +59,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "BuyAction",
+                    "type": "Button",
+                    "id": "8ce91edd-cbf0-47c0-b04c-893d2981a938",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -301,6 +310,28 @@
                     "processors": "",
                     "groups": ";Gamepad",
                     "action": "ChangeMaskNeg",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cea05a80-9bd1-4973-8c83-b40175f5d91f",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "BuyAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "de3cb68f-c306-41d5-803a-faf754e7cbeb",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "BuyAction",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

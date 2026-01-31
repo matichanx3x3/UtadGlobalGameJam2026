@@ -5,6 +5,18 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Player Data")]
 public class PlayerData : ScriptableObject
 {
+    [Header("Player Config")]
+    public int hp = 3;
+    public int scoreMultiplier = 1;
+    public int hpBonus = 0;
+    public int scoreSaved = 0;
+    
+    [Header("PlayerCombat")]
+    public int attackDamage = 1;
+    public float attackRate = 0.5f; // delay entre golpe
+    public float pushForce = 10f; // fuerza de empuje del viento
+    public float pushRate = 1f; // delay
+
     [Header("Gravity")]
     [Tooltip("Fuerza de gravedad con la que caerá (calculada automáticamente)")]
 	[HideInInspector] public float gravityStrength;

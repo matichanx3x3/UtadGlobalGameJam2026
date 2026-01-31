@@ -1,5 +1,6 @@
 using UnityEngine;
-
+using System.Collections;
+using DG.Tweening;
 public class EnemyAttacker : EnemyBase
 {
     [Header("Combate")]
@@ -13,9 +14,12 @@ public class EnemyAttacker : EnemyBase
     public Transform firePoint;
     public bool canFollowPlayer;
 
+    private bool isExploding = false;
+
     private void Update()
     {
         if (playerTransform == null) return;
+        if (isExploding) return;
 
         float distance = Vector2.Distance(transform.position, playerTransform.position);
 
@@ -27,12 +31,18 @@ public class EnemyAttacker : EnemyBase
         {
             // Detenerse para atacar
             rb.velocity = new Vector2(0, rb.velocity.y);
-
-            if (Time.time > lastAttackTime + attackCooldown)
+            if (activeQuality != null && activeQuality.type == QualityType.Exploder)
             {
+                // Iniciar secuencia de explosión (una sola vez)
+                StartCoroutine(ExplodeSequence());
+            }
+            else if (Time.time > lastAttackTime + attackCooldown)
+            {
+                // Ataque Normal (Melee/Rango)
                 Attack();
                 lastAttackTime = Time.time;
             }
+
         }
         else
         {
@@ -89,14 +99,45 @@ public class EnemyAttacker : EnemyBase
         }
     }
 
+    IEnumerator ExplodeSequence()
+    {
+        isExploding = true;
+        float delay = activeQuality.explosionDelay;
+
+        Debug.Log("ENEMIGO: ¡Secuencia de autodestrucción iniciada!");
+
+        // Feedback visual: Parpadeo rápido o hinchazón
+        transform.DOShakeScale(delay, 0.5f);
+        spriteRenderer.DOColor(Color.red, delay);
+
+        yield return new WaitForSeconds(delay);
+
+        // EXPLOSIÓN
+        Debug.Log("BOOM!");
+        
+        // Detectar si el jugador está en el radio
+        Collider2D hitPlayer = Physics2D.OverlapCircle(transform.position, activeQuality.explosionRadius, LayerMask.GetMask("Player"));
+        if (hitPlayer != null)
+        {
+            // Dañar al jugador
+            Debug.Log("Jugador dañado por explosión");
+            // hitPlayer.GetComponent<PlayerHealth>()?.TakeDamage(damage * 2); // Daño masivo
+        }
+
+        // Efecto visual de explosión (opcional instanciar particulas)
+        // Instantiate(explosionParticles, transform.position, Quaternion.identity);
+
+        Destroy(gameObject);
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
-        if (firePoint != null)
+        
+        if (qualities != null && qualities.Count > 0 && qualities[0].type == QualityType.Exploder)
         {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(firePoint.position, 0.5f);
+            Gizmos.color = new Color(1, 0.5f, 0, 0.5f); // Naranja
+            Gizmos.DrawWireSphere(transform.position, qualities[0].explosionRadius);
         }
     }
 }

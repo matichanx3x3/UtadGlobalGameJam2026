@@ -6,7 +6,7 @@ using DG.Tweening;
 public class PlayerMask : MonoBehaviour
 {
     public PlayerController playerController;
-    public MaskCanva maskUI;
+    public GameCanva maskUI;
     private int temporaryMaskIndex = 0;
     // Start is called before the first frame update
     void Start()

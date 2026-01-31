@@ -8,14 +8,10 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("Máscara Roja (Ataque)")]
     public Vector2 attackSize = new Vector2(1.5f, 1f); // area del puño
-    public int attackDamage = 1;
-    public float attackRate = 0.5f; // delay entre golpe
     private float nextAttackTime = 0f;
 
     [Header("Máscara Verde (Empuje)")]
     public Vector2 pushSize = new Vector2(3f, 2f); // area del viento
-    public float pushForce = 10f; // fuerza de empuje del viento
-    public float pushRate = 1f; // delay
     private float nextPushTime = 0f;
 
     [Header("Capas")]
@@ -38,7 +34,7 @@ public class PlayerCombat : MonoBehaviour
                 if (Time.time >= nextAttackTime)
                 {
                     PerformAttackRed();
-                    nextAttackTime = Time.time + attackRate;
+                    nextAttackTime = Time.time + playerController.data.attackRate;
                 }
                 break;
 
@@ -46,7 +42,7 @@ public class PlayerCombat : MonoBehaviour
                 if (Time.time >= nextPushTime)
                 {
                     PerformPushGreen();
-                    nextPushTime = Time.time + pushRate;
+                    nextPushTime = Time.time + playerController.data.pushRate;
                 }
                 break;
         }
@@ -62,7 +58,7 @@ public class PlayerCombat : MonoBehaviour
             IDamageable damageable = enemy.GetComponent<IDamageable>();
             if (damageable != null)
             {
-                damageable.TakeDamage(attackDamage, "Puño Rojo");
+                damageable.TakeDamage(playerController.data.attackDamage, "Puño Rojo");
             }
         }
     }
@@ -80,7 +76,7 @@ public class PlayerCombat : MonoBehaviour
             IPushable pushable = obj.GetComponent<IPushable>();
             if (pushable != null)
             {
-                pushable.Push(pushDir, pushForce);
+                pushable.Push(pushDir, playerController.data.pushForce);
             }
         }
     }

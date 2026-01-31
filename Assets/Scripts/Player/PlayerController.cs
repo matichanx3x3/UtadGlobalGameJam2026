@@ -17,10 +17,9 @@ public enum Masktype
 }
 public class PlayerController : MonoBehaviour
 {
-    
+    public PlayerData data;
     public bool isActive = true;
     public PlayerInputRead pInput;
-
     public ActualPlayerState actualPlayerState = ActualPlayerState.Active;
     
     public Masktype masktype = Masktype.NoMask;
@@ -28,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public PlayerMask playerMask;
     public int maskActual = 0;
     public bool noMask = true;
+
+    private int actualHP;
+    [SerializeField]private int score = 0;
 
     public bool IsInputBlocked => actualPlayerState == ActualPlayerState.WaitingForMask;
 
@@ -50,6 +52,21 @@ public class PlayerController : MonoBehaviour
             {
                 Debug.LogError("PlayerMask no encontrado.");
             }
+        }
+    }
+
+    void Start()
+    {
+        actualHP = data.hp + data.hpBonus; 
+        score = data.scoreSaved;
+        GameCanva.instance.SetInitialValue(score);
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Y))
+        {
+            AddScore(1000);
         }
     }
 
@@ -91,5 +108,26 @@ public class PlayerController : MonoBehaviour
                 noMask = false;
                 break;
         }
+    }
+
+    public void AddScore(int scoreToAdd)
+    {
+        score = score + (scoreToAdd * data.scoreMultiplier);
+        Debug.Log("se tien: " + score);
+        GameCanva.instance.UpdateScore(score);
+        SaveScore();
+    }
+
+    public void SaveScore()
+    {
+        data.scoreSaved = score;
+    }
+
+    public void UseScore(int scoreToLose)
+    {
+        if(score - scoreToLose < 0) return;
+        score -= scoreToLose;
+        GameCanva.instance.UpdateScore(score);
+        SaveScore();
     }
 }

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 948a73fb560484c85804f3ca78c084f3, type: 3}
-  m_Name: Player
+  m_Name: PlayerDefaults
   m_EditorClassIdentifier: 
   hp: 3
   scoreMultiplier: 1
