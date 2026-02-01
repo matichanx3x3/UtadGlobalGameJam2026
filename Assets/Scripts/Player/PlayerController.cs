@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     private int actualHP;
     [SerializeField]private int score = 0;
+
+    public static Action<int> OnPointsEarned;
 
     public bool IsInputBlocked => actualPlayerState == ActualPlayerState.WaitingForMask;
 
@@ -68,6 +71,16 @@ public class PlayerController : MonoBehaviour
         {
             AddScore(1000);
         }
+    }
+
+    void OnEnable()
+    {
+        OnPointsEarned += AddScore;
+    }
+
+    void OnDisable()
+    {
+        OnPointsEarned -= AddScore;
     }
 
     public void ActivatePlayer()
@@ -112,8 +125,8 @@ public class PlayerController : MonoBehaviour
 
     public void AddScore(int scoreToAdd)
     {
-        score = score + (scoreToAdd * data.scoreMultiplier);
-        Debug.Log("se tien: " + score);
+       int finalScore = scoreToAdd * data.scoreMultiplier; 
+        score += finalScore;
         GameCanva.instance.UpdateScore(score);
         SaveScore();
     }

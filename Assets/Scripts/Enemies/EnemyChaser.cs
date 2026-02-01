@@ -20,12 +20,16 @@ public class EnemyChaser : EnemyBase
         direction = Random.Range(0, 2) == 0 ? 1 : -1; 
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
         if (playerTransform == null) return;
 
         float distToPlayer = Vector2.Distance(transform.position, playerTransform.position);
-
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        }
         if (distToPlayer < detectionRange)
         {
             isChasing = true;

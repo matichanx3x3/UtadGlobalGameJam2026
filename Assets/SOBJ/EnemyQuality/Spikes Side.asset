@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9cc8f45004544ca0a0a2588581eb29b, type: 3}
+  m_Name: Spikes Side
+  m_EditorClassIdentifier: 
+  qualityName: Spikes Side
+  type: 5
+  colorTint: {r: 0, g: 0.36435866, b: 1, a: 1}
+  speedMultiplier: 1
+  healthBonus: 1
+  explosionDelay: 0.5
+  explosionRadius: 2

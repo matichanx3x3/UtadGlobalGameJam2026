@@ -9,6 +9,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
     public float moveSpeed = 3f;
     public int maxHealth = 3;
     protected int currentHealth;
+    public int scoreValue = 50;
     
     [Header("Cualidades")]
     public List<EnemyQualitySO> qualities;
@@ -23,6 +24,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
     protected bool isFacingRight = true;
     protected Transform playerTransform;
     protected Collider2D myCollider;
+    protected Animator anim;
 
     protected virtual void Awake()
     {
@@ -31,6 +33,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
         spriteRenderer = GetComponent<SpriteRenderer>();
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null) playerTransform = player.transform;
+        anim = GetComponent<Animator>();
     }
 
     protected virtual void Start()
@@ -38,7 +41,13 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
         currentHealth = maxHealth;
         ApplyQualities();
     }
-
+    protected virtual void Update()
+    {
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        }
+    }
     void ApplyQualities()
     {
         if (qualities.Count > 0)
@@ -109,7 +118,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
         }
         // recibe daño
         currentHealth -= amount;
-        
+        if (anim != null) anim.SetTrigger("Hit");
         // Feedback Visual
         spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(() => {
             Color originalColor = activeQuality != null ? activeQuality.colorTint : Color.white;
@@ -163,6 +172,15 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
 
     protected virtual void Die()
     {
+        if (anim != null) 
+        {
+            anim.SetBool("Die", true);
+            
+            
+            rb.velocity = Vector2.zero;
+            GetComponent<Collider2D>().enabled = false;
+        }
+        PlayerController.OnPointsEarned?.Invoke(scoreValue);
         transform.DOScale(0, 0.2f).OnComplete(() => Destroy(gameObject));
     }
 

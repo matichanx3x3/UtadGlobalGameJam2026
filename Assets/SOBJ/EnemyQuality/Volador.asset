@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9cc8f45004544ca0a0a2588581eb29b, type: 3}
-  m_Name: Exploder
+  m_Name: Volador
   m_EditorClassIdentifier: 
-  qualityName: Exploder
-  type: 1
-  colorTint: {r: 1, g: 1, b: 1, a: 1}
+  qualityName: Flying
+  type: 6
+  colorTint: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
   speedMultiplier: 1
   healthBonus: 0
-  explosionDelay: 1
+  explosionDelay: 0.5
   explosionRadius: 2

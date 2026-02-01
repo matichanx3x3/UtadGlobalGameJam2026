@@ -22,16 +22,33 @@ public class EnemyPatrol : EnemyBase
         waitCounter = waitTime;
     }
 
-    private void Update()
+    protected override void Update()
     {
+        
+        base.Update();
         if (patrolPoints.Length == 0) return;
 
-        // mov por los patrolpoint
         Vector2 targetPosition = patrolPoints[currentPointIndex];
+        
+        // Calculamos la distancia
         float distance = Vector2.Distance(transform.position, targetPosition);
 
-        if (distance < 0.1f)
+
+        if (distance > 0.5f) 
         {
+            waitCounter = waitTime; 
+
+            Vector2 direction = (targetPosition - (Vector2)transform.position).normalized;
+
+            rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+
+            if (targetPosition.x > transform.position.x && !isFacingRight) Flip();
+            else if (targetPosition.x < transform.position.x && isFacingRight) Flip();
+        }
+        else 
+        {
+            rb.velocity = new Vector2(0, rb.velocity.y);
+
             waitCounter -= Time.deltaTime;
 
             if (waitCounter <= 0)
@@ -39,19 +56,7 @@ public class EnemyPatrol : EnemyBase
                 currentPointIndex++;
                 if (currentPointIndex >= patrolPoints.Length) 
                     currentPointIndex = 0;
-                
             }
-        }
-        else
-        {
-            waitCounter = waitTime; 
-
-            // Movimiento
-            transform.position = Vector2.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-
-            // Rotación
-            if (targetPosition.x > transform.position.x && !isFacingRight) Flip();
-            else if (targetPosition.x < transform.position.x && isFacingRight) Flip();
         }
     }
 

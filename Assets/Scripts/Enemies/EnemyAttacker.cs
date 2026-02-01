@@ -16,13 +16,16 @@ public class EnemyAttacker : EnemyBase
 
     private bool isExploding = false;
 
-    private void Update()
+    protected override void Update()
     {
         if (playerTransform == null) return;
         if (isExploding) return;
 
         float distance = Vector2.Distance(transform.position, playerTransform.position);
-
+        if (anim != null)
+        {
+            anim.SetFloat("Speed", Mathf.Abs(rb.velocity.x));
+        }
         // Gira hacia el jugador siempre
         if (playerTransform.position.x > transform.position.x && !isFacingRight) Flip();
         else if (playerTransform.position.x < transform.position.x && isFacingRight) Flip();
@@ -76,6 +79,8 @@ public class EnemyAttacker : EnemyBase
     {
         if (projectilePrefab != null) // RANGO
         {
+            
+            if (anim != null) anim.SetTrigger("Attack");
             // Instanciar
             GameObject projObj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
             Projectile projScript = projObj.GetComponent<Projectile>();
@@ -88,6 +93,8 @@ public class EnemyAttacker : EnemyBase
         }
         else // MELEE
         {
+            
+            if (anim != null) anim.SetTrigger("Attack");
             Debug.Log("Enemigo golpea!");
             // deteccion del jugador
             if (Vector2.Distance(transform.position, playerTransform.position) <= attackRange)

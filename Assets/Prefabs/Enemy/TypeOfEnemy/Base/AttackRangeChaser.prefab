@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 2000263479868109795}
   - component: {fileID: 6870480769727936098}
   - component: {fileID: 6551069530519471378}
+  - component: {fileID: -3961670341276993123}
   m_Layer: 6
   m_Name: AttackRangeChaser
   m_TagString: Enemy
@@ -208,6 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 3
   maxHealth: 3
+  scoreValue: 50
   qualities: []
   groundLayer:
     serializedVersion: 2
@@ -220,6 +222,27 @@ MonoBehaviour:
     type: 3}
   firePoint: {fileID: 5568159311293944202}
   canFollowPlayer: 0
+--- !u!95 &-3961670341276993123
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870309855705614195}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4613891609373935662
 GameObject:
   m_ObjectHideFlags: 0
