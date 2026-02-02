@@ -15,13 +15,25 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
     public List<EnemyQualitySO> qualities;
     protected EnemyQualitySO activeQuality; // Referencia rápida a la cualidad activa
 
+
+    [Header("Visuales de Púas (Referencias)")]
+    public GameObject spikeVisualTop;
+    public GameObject spikeVisualLeft;
+    public GameObject spikeVisualRight;
+    [Header("Configuración de Área (Gizmos & Lógica)")]
+    public Vector2 spikeTopSize = new Vector2(0.8f, 0.3f);
+    public Vector2 spikeTopOffset = new Vector2(0, 0.6f);
+    
+    public Vector2 spikeSideSize = new Vector2(0.3f, 0.8f);
+    public float spikeSideOffsetX = 0.6f;
+
     [Header("Detección")]
     public LayerMask groundLayer;
     public Transform groundCheck;
-
+    
     protected Rigidbody2D rb;
     protected SpriteRenderer spriteRenderer;
-    protected bool isFacingRight = true;
+    public bool isFacingRight = true;
     protected Transform playerTransform;
     protected Collider2D myCollider;
     protected Animator anim;
@@ -34,6 +46,9 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null) playerTransform = player.transform;
         anim = GetComponent<Animator>();
+        if(spikeVisualTop) spikeVisualTop.SetActive(false);
+        if(spikeVisualLeft) spikeVisualLeft.SetActive(false);
+        if(spikeVisualRight) spikeVisualRight.SetActive(false);
     }
 
     protected virtual void Start()
@@ -57,7 +72,6 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
             moveSpeed *= activeQuality.speedMultiplier;
             maxHealth += activeQuality.healthBonus;
             currentHealth += activeQuality.healthBonus;
-            spriteRenderer.color = activeQuality.colorTint;
 
             // Lógica de VUELO (Neutral)
             if (activeQuality.type == QualityType.Flying)
@@ -71,6 +85,15 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
                 Physics2D.IgnoreLayerCollision(gameObject.layer, LayerMask.NameToLayer("Ground"), true);
                 
                 rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+            }
+            if (activeQuality.type == QualityType.SpikesTop)
+            {
+                if(spikeVisualTop) spikeVisualTop.SetActive(true);
+            }
+            else if (activeQuality.type == QualityType.SpikesSide)
+            {
+                if(spikeVisualLeft) spikeVisualLeft.SetActive(true);
+                if(spikeVisualRight) spikeVisualRight.SetActive(true);
             }
         }
     }
@@ -119,12 +142,7 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
         // recibe daño
         currentHealth -= amount;
         if (anim != null) anim.SetTrigger("Hit");
-        // Feedback Visual
-        spriteRenderer.DOColor(Color.red, 0.1f).OnComplete(() => {
-            Color originalColor = activeQuality != null ? activeQuality.colorTint : Color.white;
-            spriteRenderer.color = originalColor;
-        });
-
+        
         if (currentHealth <= 0) Die();
     }
 
@@ -208,5 +226,33 @@ public class EnemyBase : MonoBehaviour, IDamageable, IPushable
       {
         Die();
       }  
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (qualities == null || qualities.Count == 0 || qualities[0] == null) return;
+
+        EnemyQualitySO previewQuality = qualities[0];
+        Gizmos.color = new Color(1, 0, 0, 0.6f);
+
+        if (previewQuality.type == QualityType.SpikesTop)
+        {
+            Vector3 center = transform.position + (Vector3)spikeTopOffset;
+            Gizmos.DrawCube(center, spikeTopSize);
+            Gizmos.DrawWireCube(center, spikeTopSize);
+        }
+
+        else if (previewQuality.type == QualityType.SpikesSide)
+        {
+            // Lado Izquierdo
+            Vector3 leftPos = transform.position + new Vector3(-spikeSideOffsetX, 0, 0);
+            Gizmos.DrawCube(leftPos, spikeSideSize);
+            Gizmos.DrawWireCube(leftPos, spikeSideSize);
+
+            // Lado Derecho
+            Vector3 rightPos = transform.position + new Vector3(spikeSideOffsetX, 0, 0);
+            Gizmos.DrawCube(rightPos, spikeSideSize);
+            Gizmos.DrawWireCube(rightPos, spikeSideSize);
+        }
     }
 }

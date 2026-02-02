@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: 1174311220713247484, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.875
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1174311220713247484, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
@@ -49,10 +49,15 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 22100000, guid: 42cb535c4b616244c8ec7e78695ae026,
         type: 2}
+    - target: {fileID: 2874256839833683692, guid: d2261282db4984038bbe691c94347da9,
+        type: 3}
+      propertyPath: isFacingRight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2896954633973259002, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
       propertyPath: m_FlipX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2896954633973259002, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
@@ -72,18 +77,33 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 2896954633973259002, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
+      propertyPath: m_CastShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896954633973259002, guid: d2261282db4984038bbe691c94347da9,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896954633973259002, guid: d2261282db4984038bbe691c94347da9,
+        type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2896954633973259002, guid: d2261282db4984038bbe691c94347da9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ce48e9345a842ca44824efe715f6a088, type: 2}
     - target: {fileID: 4212918612210304726, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.21
       objectReference: {fileID: 0}
     - target: {fileID: 4212918612210304726, guid: d2261282db4984038bbe691c94347da9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 4212918612210304726, guid: d2261282db4984038bbe691c94347da9,
         type: 3}

@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private int score = 0;
 
     public static Action<int> OnPointsEarned;
-
+    public Animator playerAnim;
     public bool IsInputBlocked => actualPlayerState == ActualPlayerState.WaitingForMask;
 
     private void Awake()
@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour
                 Debug.LogError("PlayerMask no encontrado.");
             }
         }
+        playerAnim = GetComponent<Animator>();
     }
 
     void Start()

@@ -173,12 +173,20 @@ public class PlayerMovement : MonoBehaviour
     #region RUN METHODS
     private void Run()
     {
+        if (Mathf.Abs(RB.velocity.x) < 0.1f)
+        {
+            playerController.playerAnim.SetBool("IsMoving", false);
+        }else
+        {
+            playerController.playerAnim.SetBool("IsMoving", true);
+        }
+
         // velocidad objetivo (Input * Velocidad Máxima)
         float targetSpeed = playerController.pInput.GetHorizontalInput() * playerController.data.runMaxSpeed;
-
+        
         // diferencia entre la velocidad actual y la deseada
         float speedDif = targetSpeed - RB.velocity.x;
-
+        
         // qué tasa de aceleración usar
         // Si targetSpeed es casi 0, frena, sino esta corriendo.
         float accelRate = (Mathf.Abs(targetSpeed) > 0.01f) ? playerController.data.runAccelAmount : playerController.data.runDeccelAmount;
@@ -191,8 +199,9 @@ public class PlayerMovement : MonoBehaviour
         // se aplicar la fuerza final
         // F = m * a , basada en la diferencia de velocidad
         float movement = speedDif * accelRate;
-
+        
         RB.AddForce(movement * Vector2.right, ForceMode2D.Force);
+        playerController.playerAnim.SetFloat("MovSpeed", Mathf.Abs(RB.velocity.x));
     }
     #endregion
 

@@ -22,7 +22,6 @@ public class EnemyChaser : EnemyBase
 
     protected override void Update()
     {
-        base.Update();
         if (playerTransform == null) return;
 
         float distToPlayer = Vector2.Distance(transform.position, playerTransform.position);
@@ -66,6 +65,8 @@ public class EnemyChaser : EnemyBase
             // Si no persigue ni espera -> Patrulla
             Wander();
         }
+        
+        //base.Update();
     }
 
     void ChasePlayer()

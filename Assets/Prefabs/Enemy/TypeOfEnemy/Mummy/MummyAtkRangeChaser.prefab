@@ -42,12 +42,17 @@ PrefabInstance:
     - target: {fileID: 2000263479868109795, guid: bfcb824b0b73044febdc89ac2da2c60e,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.875
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2000263479868109795, guid: bfcb824b0b73044febdc89ac2da2c60e,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6551069530519471378, guid: bfcb824b0b73044febdc89ac2da2c60e,
+        type: 3}
+      propertyPath: canFollowPlayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6946813229035837401, guid: bfcb824b0b73044febdc89ac2da2c60e,
         type: 3}
@@ -57,7 +62,7 @@ PrefabInstance:
     - target: {fileID: 8532902142335295915, guid: bfcb824b0b73044febdc89ac2da2c60e,
         type: 3}
       propertyPath: m_FlipX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8532902142335295915, guid: bfcb824b0b73044febdc89ac2da2c60e,
         type: 3}

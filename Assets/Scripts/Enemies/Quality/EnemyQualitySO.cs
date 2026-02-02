@@ -17,8 +17,6 @@ public class EnemyQualitySO : ScriptableObject
     public string qualityName;
     public QualityType type;
     
-    [Header("Visual")]
-    public Color colorTint = Color.white;
 
     [Header("Modificadores Base")]
     public float speedMultiplier = 1f;

@@ -17,7 +17,7 @@ PrefabInstance:
     - target: {fileID: 37142102131768233, guid: eb58cedae52654aecb7a24a7ccd837ec,
         type: 3}
       propertyPath: m_FlipX
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 37142102131768233, guid: eb58cedae52654aecb7a24a7ccd837ec,
         type: 3}
@@ -118,7 +118,7 @@ PrefabInstance:
     - target: {fileID: 3356487373289508838, guid: eb58cedae52654aecb7a24a7ccd837ec,
         type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.875
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3356487373289508838, guid: eb58cedae52654aecb7a24a7ccd837ec,
         type: 3}
